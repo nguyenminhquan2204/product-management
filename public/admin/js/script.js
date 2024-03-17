@@ -177,3 +177,47 @@ if(uploadImage) {
     });
 }
 // End upload Image
+
+// Sort
+const sort = document.querySelector("[sort]");
+if(sort) {
+    let url = new URL(window.location.href);
+
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClear = sort.querySelector("[sort-clear]");
+
+    // Sắp xếp
+    sortSelect.addEventListener("change", (e) => {
+        // console.log(e);
+        // console.log(e.target.value);
+        const value = e.target.value;
+        const [sortKey, sortValue] = value.split("-");
+        // console.log(sortKey);
+        // console.log(sortValue);
+
+        url.searchParams.set("sortKey", sortKey);
+        url.searchParams.set("sortValue", sortValue);
+
+        window.location.href = url.href;
+    });
+
+    // Xóa sắp xếp
+    sortClear.addEventListener("click", () => {
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+
+        window.location.href = url.href;
+    });
+
+    // Thêm selected cho option
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+
+    if(sortKey && sortValue) {
+        const stringSort = `${sortKey}-${sortValue}`;
+        const optionSelect = sortSelect.querySelector(`option[value="${stringSort}"]`);
+        optionSelect.selected = true;
+        // optionSelect.setAttribute("selected") = true;
+    }
+}
+// End Sort

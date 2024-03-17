@@ -20,13 +20,13 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status;
     }
 
-    //  Phan tim kiem
+//  Phan tim kiem
     const objectSearch = searchHelper(req.query);
     if(objectSearch.regex) {
         find.title = objectSearch.regex;
     }
 
-    // Pagination
+// Pagination
     const countProducts = await Product.countDocuments(find);
     let objectPagination = paginationHelper(
         {
@@ -36,9 +36,19 @@ module.exports.index = async (req, res) => {
         req.query,
         countProducts
     );
+// End pagination
+
+// Sort
+    let sort = {}
+    if(req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue;
+    } else {
+        sort.position = "desc";
+    }
+// End Sort
     
     const products = await Product.find(find)
-        .sort({ position: "desc" })  // asc (theo tang dan), desc (theo giam dan)
+        .sort(sort)  // asc (theo tang dan), desc (theo giam dan)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip);
 
@@ -155,9 +165,9 @@ module.exports.createPost = async (req, res) => {
     }
 
     // console.log(req.body);
-    if(req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
+    // if(req.file) {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // }
 
     const product = new Product(req.body);
     await product.save();
