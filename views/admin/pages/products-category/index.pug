@@ -1,15 +1,12 @@
 extends ../../layouts/default.pug
+include ../../mixins/form-change-multi.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
-include ../../mixins/pagination.pug
-include ../../mixins/form-change-multi.pug
-include ../../mixins/alert.pug
 include ../../mixins/sort.pug
 
 block main
-    +alert-success(5000)
 
-    h1 Danh sách sản phẩm
+    h1 Danh mục sản phẩm
 
     .card.mb-3
         .card-header Bộ lọc và Tìm kiếm
@@ -19,7 +16,7 @@ block main
                     +filter-status(filterStatus)
                 .col-6
                    +search(keyword)
-
+    
     .card.mb-3
         .card-header Sắp xếp
         .card-body
@@ -35,7 +32,7 @@ block main
                         +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)      
                     .col-4
                         a(
-                            href=`${prefixAdmin}/products/create`
+                            href=`${prefixAdmin}/products-category/create`
                             class="btn btn-outline-success"
                         ) + Thêm mới
 
@@ -50,12 +47,11 @@ block main
                             th STT
                             th Hình ảnh
                             th Tiêu đề
-                            th Giá
                             th Vị trí
                             th Trạng thái
                             th Hành động
                     tbody
-                        each item, index in products
+                        each item, index in records
                             tr
                                 td
                                     input(
@@ -72,7 +68,6 @@ block main
                                         height="auto"
                                     )
                                 td #{item.title}
-                                td #{item.price}$
                                 td
                                     input(
                                         type="number"
@@ -100,11 +95,11 @@ block main
                                         ) Dừng hoạt động
                                 td
                                     a(
-                                        href=`${prefixAdmin}/products/detail/${item.id}`
+                                        href=`${prefixAdmin}/products-category/detail/${item.id}`
                                         class="btn btn-secondary btn-sm"
                                     ) Chi tiết
                                     a(
-                                        href=`${prefixAdmin}/products/edit/${item.id}`
+                                        href=`${prefixAdmin}/products-category/edit/${item.id}`
                                         class="btn btn-warning btn-sm"
                                     ) Sửa
                                     button(
@@ -113,39 +108,31 @@ block main
                                         button-delete
                                     ) Xóa  
 
-    +pagination(pagination)
-
     form(
         action=""
         method="POST"
         id="form-change-status"
-        data-path=`${prefixAdmin}/products/change-status`
+        data-path=`${prefixAdmin}/products-category/change-status`
     ) 
 
     form(
         action=""
         method="POST"
         id="form-delete-item"
-        data-path=`${prefixAdmin}/products/delete`
+        data-path=`${prefixAdmin}/products-category/delete`
     )
 
-    //- script(src="../../../../public/admin/js/product.js")
-    script(src="/admin/js/product.js") 
+    script(src="/admin/js/product-category.js") 
 
-    
-            //- tr
-            //-     td 2
-            //-     td
-            //-         img(
-            //-             src="https://i.dummyjson.com/data.products/1/thumbnail.jpg"
-            //-             alt="San pham 2"
-            //-             width="100px"
-            //-             height="auto"
-            //-         )
-            //-     td San pham 2
-            //-     td 150$
-            //-     td
-            //-         a(href="#" class="badge badge-danger") Dừng hoạt động
-            //-     td
-            //-         button(class="btn btn-warning btn-sm") Sửa
-            //-         button(class="btn btn-danger btn-sm ml-1") Xóa 
+//- _id
+//- title
+//- parent_id
+//- description
+//- thumbnail
+//- status
+//- position
+//- deleted
+//- deletedAt
+//- createAt
+//- updateAt
+//- slug
