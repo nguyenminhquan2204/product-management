@@ -13,6 +13,31 @@ module.exports.index = async (req, res) => {
         deleted: false,
     };
 
+    // filterStatus
+    const filterStatus = filterStatusHelper(req.query);
+
+    if(req.query.status) {
+        find.status = req.query.status;
+    }
+    // End filterStatus
+
+    // Search
+    const objectSearch = searchHelper(req.query);
+    if(objectSearch.regex) {
+        find.title = objectSearch.regex;
+        console.log(find.title);
+    }
+    // End Search
+
+    // Sort
+    let sort = {};
+    if(req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue;
+    } else {
+        sort.position = "desc";
+    }
+    // End Sort
+
     const records = await ProductCategory.find(find);
 
     const newRecords = createTreeHelper.tree(records);
@@ -20,6 +45,8 @@ module.exports.index = async (req, res) => {
     res.render("admin/pages/products-category/index", {
         pageTitle: "Danh mục sản phẩm",
         records: newRecords,
+        filterStatus: filterStatus,
+        keyword: objectSearch.keyword,
     });
 };
 

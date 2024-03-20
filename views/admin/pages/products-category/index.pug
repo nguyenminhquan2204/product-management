@@ -4,27 +4,21 @@ include ../../mixins/form-change-multi.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/table-tree.pug
+include ../../mixins/sortCategory.pug
 
 block main
     +alert-success(5000)
 
     h1 Danh mục sản phẩm
 
-    //- .card.mb-3
-    //-     .card-header Bộ lọc và Tìm kiếm
-    //-     .card-body
-    //-         .row
-    //-             .col-6
-    //-                 +filter-status(filterStatus)
-    //-             .col-6
-    //-                +search(keyword)
-    
-    //- .card.mb-3
-    //-     .card-header Sắp xếp
-    //-     .card-body
-    //-         .row
-    //-             .col-4
-    //-                 +sort()
+    .card.mb-3
+        .card-header Bộ lọc và Tìm kiếm
+        .card-body
+            .row
+                .col-6
+                    +filter-status(filterStatus)
+                .col-6
+                   +search(keyword)
 
     .card.mb-3
         .card-header Danh sách

@@ -26,6 +26,7 @@ module.exports.index = async (req, res) => {
     const objectSearch = searchHelper(req.query);
     if(objectSearch.regex) {
         find.title = objectSearch.regex;
+        console.log(find.title);
     }
 
 // Pagination
@@ -41,7 +42,7 @@ module.exports.index = async (req, res) => {
 // End pagination
 
 // Sort
-    let sort = {}
+    let sort = {};
     if(req.query.sortKey && req.query.sortValue) {
         sort[req.query.sortKey] = req.query.sortValue;
     } else {
@@ -192,9 +193,14 @@ module.exports.edit = async (req, res) => {
         const product = await Product.findOne(find);   //chi tim 1 ban ghi co trong database
         // console.log(product);
 
+        const category = await ProductCategory.find({ deleted: false });
+
+        const newCategory = createTreeHelper.tree(category);
+
         res.render("admin/pages/products/edit", {
             pageTitle: "Chỉnh sửa sản phẩm",
-            product: product
+            product: product,
+            category: newCategory,
         });
     } catch(error) {
         req.flash()
