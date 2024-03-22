@@ -102,3 +102,32 @@ module.exports.permissionsPatch = async (req, res) => {
 
     res.redirect("back");
 };
+
+// [GET] /admin/roles/detail/:id
+module.exports.detail = async (req, res) => {
+    let find ={
+        deleted: false,
+        _id: req.params.id,
+    };
+
+    const record = await Role.findOne(find);
+
+    res.render("admin/pages/roles/detail", {
+        pageTitle: record.title,
+        record: record,
+    });
+};
+
+// [DELETE] /admin/roles/delete/id
+module.exports.delete = async(req, res) => {
+    const id = req.params.id;
+
+    await Role.updateOne({ _id: id }, {
+        deleted: true,
+        deletedAt: new Date(),
+    });
+
+    req.flash("success", "Xóa thành công");
+
+    res.redirect("back");
+};

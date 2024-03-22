@@ -131,9 +131,15 @@ module.exports.detail = async(req, res) => {
 
         const record = await ProductCategory.findOne(find);
 
+        const recordParent = {};
+        if(record.parent_id) {
+            recordParent = await ProductCategory.findOne({ deleted: false, _id: record.parent_id });
+        }
+        
         res.render("admin/pages/products-category/detail", {
             pageTitle: record.title,
             product: record,
+            productParent: recordParent,
         });
     } catch(error) {
         res.redirect(`${systemConfig.prefixAdmin}/products-category`);

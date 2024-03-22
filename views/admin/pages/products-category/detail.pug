@@ -11,6 +11,9 @@ block main
                 style="width: 100px"
             )
     
+    if(productParent)
+        div(class="mb-4") Danh mục cha: <b>#{productParent.title}</b>
+
     if(product.status)
         div(class="mb-4")
             span Trạng thái: 
