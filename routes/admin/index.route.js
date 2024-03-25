@@ -18,13 +18,29 @@ module.exports = (app) => {
         dashboardRoutes
     );
 
-    app.use(PATH_ADMIN + "/products-category", authMiddleware.requireAuth, productCategoryRoutes);
+    app.use(
+        PATH_ADMIN + "/products-category", 
+        authMiddleware.requireAuth, 
+        productCategoryRoutes
+    );
 
-    app.use(PATH_ADMIN + "/products", authMiddleware.requireAuth, productRouters);
+    app.use(
+        PATH_ADMIN + "/products", 
+        authMiddleware.requireAuth, 
+        productRouters
+    );
 
-    app.use(PATH_ADMIN + "/roles", authMiddleware.requireAuth, roleRouters);
+    app.use(
+        PATH_ADMIN + "/roles", 
+        authMiddleware.requireAuth, 
+        roleRouters
+    );
 
-    app.use(PATH_ADMIN + "/accounts", authMiddleware.requireAuth, accountRouters);
+    app.use(
+        PATH_ADMIN + "/accounts", 
+        authMiddleware.requireAuth, 
+        accountRouters
+    );
 
     app.use(PATH_ADMIN + "/auth", authRouters);
 

@@ -12,7 +12,6 @@ module.exports.login = async (req, res) => {
     } else {
         res.render("admin/pages/auth/login", {
             pageTitle: "Đăng nhập",
-
         });
     }
 };
