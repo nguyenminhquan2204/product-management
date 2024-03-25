@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model");
+const Account = require("../../models/account.model");
 const ProductCategory = require("../../models/product-category.model");
 
 const systemConfig = require("../../config/system");
@@ -56,6 +57,17 @@ module.exports.index = async (req, res) => {
         .skip(objectPagination.skip);
 
     // console.log(products);
+
+    for (const product of products) {
+        const user = await Account.findOne({
+            _id: product.createdBy.account_id,
+        });
+        
+        if(user) {
+            product.accountFullName = user.fullName;
+        }
+    }
+
     res.render("admin/pages/products/index", {
         pageTitle: "Danh sách sản phẩm",
         products: products,
@@ -174,7 +186,10 @@ module.exports.createPost = async (req, res) => {
     // if(req.file) {
     //     req.body.thumbnail = `/uploads/${req.file.filename}`;
     // }
-
+    req.body.createdBy = {
+        account_id: res.locals.user.id
+    };
+    
     const product = new Product(req.body);
     await product.save();
 
