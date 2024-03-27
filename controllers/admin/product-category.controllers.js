@@ -164,6 +164,17 @@ module.exports.create = async (req, res) => {
 
 // [POST] : /admin/products-category/create
 module.exports.createPost = async (req, res) => {
+    // --------------------------------
+    // Ngan chan POSTMAN (demo)
+        // const permissions = res.locals.role.permissions;
+        // if(permissions.includes("product-category_create")) {
+        //     console.log("Có quyền");
+        // } else {
+        //     console.log("Không có quyền");
+        //     return;
+        // }
+    // ----------------------------------
+    
     if(req.body.position == "") {
         const count = await ProductCategory.countDocuments();
         req.body.position = count + 1;
