@@ -96,7 +96,7 @@ module.exports.edit = async(req, res) => {
             records: newRecords,
         });
     } catch (error) {
-        req.flash()
+        req.flash("error", "Lỗi !!");
         res.redirect(`${systemConfig.prefixAdmin}/products-category`);
     }
 };

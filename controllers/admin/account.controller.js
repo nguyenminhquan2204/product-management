@@ -100,7 +100,7 @@ module.exports.editPatch = async (req, res) => {
         } else {
             delete req.body.password;
         }
-
+        console.log(req.body);
         await Account.updateOne({ _id: id }, req.body);
         // console.log(req.body);
         req.flash("success", "Cập nhật tài khoản thành công!");

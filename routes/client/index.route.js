@@ -8,7 +8,6 @@ module.exports = (app) => {
 
     app.use("/", homeRoutes);
 
-    app.use("/products", categoryMiddleware.category, productRoutes);
+    app.use("/products", productRoutes);
 
-    
 }
