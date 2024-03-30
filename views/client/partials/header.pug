@@ -7,8 +7,25 @@ header.header
                 .inner-logo
                     a(href="/")
                         img(src="/images/logo.png", alt="logo")
+            .col-5 
+                form(
+                    action="/search"
+                    method="GET"
+                )
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Nhập từ khóa ..."
+                            class="form-control"
+                            name="keyword"
+                            value=keyword
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Tìm
 
-            .col-9
+            .col-4
                 .inner-menu
                     ul
                         li
@@ -16,21 +33,4 @@ header.header
                         li(class="sub-menu")
                             a(href="/products") Sản phẩm
                             -const pathProduct = "/products"
-                            +sub-menu(layoutProductsCategory, pathProduct)
-
-                            //- ul
-                            //-     li 
-                            //-         a(href="/products/slug-1") Muc 1 
-                            //-         ul
-                            //-             li 
-                            //-                 a(href="/products/slug-1-1") Muc 1-1 
-                            //-             li 
-                            //-                 a(href="/products/slug-1-2") Muc 1-2
-                            //-                 ul
-                            //-                     li 
-                            //-                         a(href="/products/slug-1-2-1") Muc 1-2-1 
-                            //-                     li 
-                            //-                         a(href="/products/slug-1-2-2") Muc 1-2-2 
-                            //-     li
-                            //-         a(href="products/slug-2") Muc 2 
-
+                            +sub-menu(layoutProductsCategory, pathProduct)  

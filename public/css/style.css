@@ -207,3 +207,7 @@
     font-weight: 600;
     display: inline-block;
 }
+
+.product-detail .detail {
+    padding-left: 20px;
+}
