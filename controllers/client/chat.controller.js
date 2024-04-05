@@ -4,6 +4,8 @@ const User = require("../../models/user.model");
 // [GET] /chat/
 module.exports.index = async (req, res) => {
     const userId = res.locals.user.id;
+    const fullName = res.locals.user.fullName;
+
     // SocketIO
     _io.once("connection", (socket) => {
         // console.log("a user connected", socket.id);
@@ -17,6 +19,12 @@ module.exports.index = async (req, res) => {
                 content: content
             });
             await chat.save();
+
+            _io.emit("SERVER_RETURN_MESSAGE", {
+                userId: userId,
+                fullName: fullName,
+                content: content
+            });
         });
     });
     // End SocketIO
@@ -27,14 +35,13 @@ module.exports.index = async (req, res) => {
     });
 
     for(const chat of chats) {
-        const infouser = await User.findOne({
+        const infoUser = await User.findOne({
             _id: chat.user_id
-        }).select("fullName");
+        }).select("id fullName");
 
-        chat.infoUser = infouser;
+        chat.infoUser = infoUser;
     }
     // End
-
     res.render("client/pages/chat/index", {
         pageTitle: "Chat",
         chats: chats

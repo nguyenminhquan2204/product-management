@@ -9,7 +9,7 @@ block main
         
         .row
             .col-12 
-                .chat 
+                .chat(my-id=user.id)
                     //- .inner-head
                     //- .inner-avatar ..
                     //- .inner-name ..
@@ -20,24 +20,6 @@ block main
                                     .inner-name #{chat.infoUser.fullName}
                                 .inner.content
                                     | #{chat.content}
-                        //- .inner-incoming 
-                        //-     .inner-name ..
-                        //-     .inner-content 
-                        //-         |...
-                        //- .inner-outgoing 
-                        //-     .inner-content 
-                        //-         |...
-                        //- .inner-incoming 
-                        //-     .inner-name ..
-                        //-     .inner-content 
-                        //-         |...
-                        //- .inner-outgoing     
-                        //-     .inner-content
-                        //-         |...
-                        //- .inner-incoming 
-                        //-     .inner-name ..
-                        //-     .inner-content 
-                        //-         |...
                     .inner-foot 
                         form(
                             class="inner-form"

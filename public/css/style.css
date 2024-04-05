@@ -250,23 +250,45 @@
 /* End Show Alert */
 
 /* Chat */
-
 .chat {
     width: 100%;
     border: 1px solid #ddd; 
     border-radius: 8px;
 }
-.chat .inner-incoming {
-    text-align: left;
+.chat .inner-head .inner-name {
+    display: inline-block;
+    font-weight: 600;
+    margin-left: 5px;
 }
-.chat .inner-outgoing {
-    text-align: right;
+.chat .inner-body {
+    padding: 10px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+.chat .inner-body .inner-name {
+    font-weight: 600;
+}
+.chat .inner-body .inner-outgoing {
+    background: #FE5DA3;
     border-radius: 15px;
-    border: 1px solid #FE5DA3;
+    height: 32px;
+}
+.chat .inner-body .inner-content {
+    background: #F1F1F1;
+    margin-bottom: 10px;
+    max-width: 220px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    line-height: 1.4;
+}
+.chat .inner-outgoing .inner-content {
+    margin-left: auto;
     background: #FE5DA3;
     color: #fff;
-    height: 32px;
-    padding: 0 20px;
+}
+.chat .inner-foot {
+    border-top: 1px solid #ddd;
+    padding: 10px;
 }
 .chat .inner-form {
     display: flex;
