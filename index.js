@@ -39,10 +39,8 @@ app.set("view engine", "pug");
 // Socket
 const server = http.createServer(app);
 const io = new Server(server);
+global._io = io;
 
-io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
-});
 // End
 
 // Flash: hien thi thong bao
