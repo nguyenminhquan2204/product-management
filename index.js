@@ -7,7 +7,8 @@ const session = require("express-session");
 const flash = require("express-flash");
 const moment = require("moment");
 // const multer = require("multer");
-
+const http = require("http");
+const { Server } = require("socket.io");
 require("dotenv").config();
 
 const database = require("./config/database.js");
@@ -34,6 +35,15 @@ app.use(bodyParser.urlencoded({
 // app.set("views", "./views");
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
+
+// Socket
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+    console.log("a user connected", socket.id);
+});
+// End
 
 // Flash: hien thi thong bao
 app.use(cookieParser("QUANCHI"));
@@ -67,6 +77,6 @@ app.get("*", (req, res) => {
     });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Example App listening on port ${port}`);
 });
