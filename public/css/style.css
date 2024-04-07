@@ -269,9 +269,11 @@
     font-weight: 600;
 }
 .chat .inner-body .inner-outgoing {
-    background: #FE5DA3;
+    background: red;
     border-radius: 15px;
     height: 32px;
+    margin-left: auto;
+    margin-bottom: 20px;
 }
 .chat .inner-body .inner-content {
     background: #F1F1F1;
@@ -283,7 +285,6 @@
 }
 .chat .inner-outgoing .inner-content {
     margin-left: auto;
-    background: #FE5DA3;
     color: #fff;
 }
 .chat .inner-foot {
@@ -312,3 +313,14 @@
     cursor: pointer;
 }
 /* End Chat */
+
+/* Emoji-picker */
+.tooltip {
+    visibility: hidden;
+}
+
+.tooltip.shown {
+    visibility: visible;
+    opacity: 1;
+}
+/* End Emoji-picker */
