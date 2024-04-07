@@ -13,14 +13,24 @@ const showTyping = () => {
 }
 // End Function Show Typing
 
+// FileUploadWithPreview
+const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-image', {
+    multiple: true,
+    maxFileCount: 6
+});
+// End FileUploadWithPreview
+
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
 if (formSendData) {
     formSendData.addEventListener("submit", (e) => {
         e.preventDefault();
         const content = e.target.elements.content.value;
+        const images = upload.cachedFileArray || [];
 
-        if (content) {
+        if (content || images.length > 0) {
+            // Send image or content to server
+
             socket.emit("CLIENT_SEND_MESSAGE", content);
             e.target.elements.content.value = "";
             socket.emit("CLIENT_SEND_TYPING", "hidden");
