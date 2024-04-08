@@ -40,7 +40,6 @@ app.set("view engine", "pug");
 const server = http.createServer(app);
 const io = new Server(server);
 global._io = io;
-
 // End
 
 // Flash: hien thi thong bao

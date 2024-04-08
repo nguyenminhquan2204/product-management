@@ -255,19 +255,32 @@
     border: 1px solid #ddd; 
     border-radius: 8px;
 }
+
 .chat .inner-head .inner-name {
     display: inline-block;
     font-weight: 600;
     margin-left: 5px;
 }
+
 .chat .inner-body {
     padding: 10px;
     max-height: 450px;
     overflow-y: auto;
 }
+
 .chat .inner-body .inner-name {
     font-weight: 600;
 }
+
+.chat .inner-body .inner-content {
+    background: #FE5DA3;
+    margin-bottom: 10px;
+    max-width: 220px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    line-height: 1.4;
+}
+
 .chat .inner-body .inner-outgoing {
     background: red;
     border-radius: 15px;
@@ -275,26 +288,27 @@
     margin-left: auto;
     margin-bottom: 20px;
 }
-.chat .inner-body .inner-content {
-    background: #F1F1F1;
-    margin-bottom: 10px;
-    max-width: 220px;
-    padding: 5px 10px;
-    border-radius: 15px;
-    line-height: 1.4;
+
+.chat .inner-body .inner-name {
+    font-weight: 600;
 }
+
 .chat .inner-outgoing .inner-content {
     margin-left: auto;
     color: #fff;
+    background: #FE5DA3;
 }
+
 .chat .inner-foot {
     border-top: 1px solid #ddd;
     padding: 10px;
 }
+
 .chat .inner-form {
     display: flex;
     align-items: center;
 }
+
 .chat .inner-form input {
     flex: 1;
     height: 32px;
@@ -303,6 +317,7 @@
     padding: 0 10px;
     outline: none;
 }
+
 .chat .inner-form button {
     border-radius: 15px;
     border: 1px solid #FE5DA3;
@@ -311,6 +326,48 @@
     height: 32px;
     padding: 0 10px;
     cursor: pointer;
+}
+
+.chat .inner-body .inner-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background: #efefef;
+    padding: 10px;
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+}
+
+.chat .inner-body .inner-outgoing .inner-images {
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat .inner-body .iner-outgoing .inner-images img {
+    margin: 0 0 5px 5px;
+}
+
+.chat .inner-preview-images {
+    position: relative;
+}
+
+.chat .inner-preview-images .label-container {
+    display: none;
+}
+
+.chat .inner-preview-images .input-container {
+    display: none;
+}
+
+.chat .inner-preview-images .image-preview {
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+}
+
+.chat .inner-preview-images .image-preview-item {
+    width: 90px;
+    background-size: contain;
 }
 /* End Chat */
 
@@ -351,6 +408,5 @@
     display: inline-block;
     margin: 0 3px;
 }
-
 
 /* End Box-typing */
