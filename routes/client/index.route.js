@@ -11,6 +11,7 @@ const cartRoutes = require("./cart.route.js");
 const checkoutRoutes = require("./checkout.route.js");
 const userRoutes = require("./user.route.js");
 const chatRoutes = require("./chat.route.js");
+const usersRoutes = require("./users.route.js");
 
 module.exports = (app) => {
     app.use(categoryMiddleware.category);
@@ -35,4 +36,5 @@ module.exports = (app) => {
 
     app.use("/chat", authMiddleware.requireAuth, chatRoutes);
 
+    app.use("/users", authMiddleware.requireAuth, usersRoutes);
 }
