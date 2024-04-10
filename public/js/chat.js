@@ -63,11 +63,11 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         htmlFullName = `<div class="inner-name"><b>${data.fullName}</b></div>`;
     }
 
-    if(data.content) {
+    if (data.content) {
         htmlContent = `<div class="inner-content">${data.content}</div>`;
     }
 
-    if(data.images) {
+    if (data.images) {
         htmlImages += `<div class="inner-images">`
 
         for (const image of data.images) {
@@ -84,11 +84,17 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         ${htmlContent}
         ${htmlImages}
     `;
-    
+
     // body.appendChild(div);
     body.insertBefore(div, boxTyping)
 
     body.scrollTop = body.scrollHeight;
+
+    // preview images
+    const boxImages = div.querySelector(".inner-images");
+    if (boxImages) {
+        const gallery = new Viewer(boxImages);
+    }
 });
 // END SERVER_RETURN_MESSAGE
 
@@ -123,7 +129,7 @@ if (emojiPicker) {
         const icon = event.detail.unicode;
         // console.log(icon);
         inputChat.value = inputChat.value + icon;
-        
+
         const end = inputChat.value.length;
         inputChat.setSelectionRange(end, end);
         inputChat.focus();
@@ -171,3 +177,11 @@ if (elementListTyping) {
     });
 }
 // End SERVER_RETURN_TYPING
+
+// Preview Image
+const chatBody = document.querySelector(".chat .inner-body");
+
+if (chatBody) {
+    const gallery = new Viewer(chatBody);
+}
+// End Preview Image
