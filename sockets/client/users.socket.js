@@ -15,11 +15,13 @@ module.exports = async (res) => {
                 acceptFriends: myUserId
             });
 
-            if(!existUserAInB) {
+            if (!existUserAInB) {
                 await User.updateOne({
                     _id: userId
                 }, {
-                    $push: { acceptFriends: myUserId }
+                    $push: {
+                        acceptFriends: myUserId
+                    }
                 });
             }
 
@@ -29,11 +31,13 @@ module.exports = async (res) => {
                 requestFriends: userId
             });
 
-            if(!existUserBInA) {
+            if (!existUserBInA) {
                 await User.updateOne({
                     _id: myUserId
                 }, {
-                    $push: { requestFriends: userId }
+                    $push: {
+                        requestFriends: userId
+                    }
                 });
             }
         });
@@ -48,11 +52,13 @@ module.exports = async (res) => {
                 acceptFriends: myUserId
             });
 
-            if(existUserAInB) {
+            if (existUserAInB) {
                 await User.updateOne({
                     _id: userId
                 }, {
-                    $pull: { acceptFriends: myUserId }
+                    $pull: {
+                        acceptFriends: myUserId
+                    }
                 });
             }
 
@@ -62,11 +68,13 @@ module.exports = async (res) => {
                 requestFriends: userId
             });
 
-            if(existUserBInA) {
+            if (existUserBInA) {
                 await User.updateOne({
                     _id: myUserId
                 }, {
-                    $pull: { requestFriends: userId }
+                    $pull: {
+                        requestFriends: userId
+                    }
                 });
             }
         });
@@ -81,11 +89,13 @@ module.exports = async (res) => {
                 acceptFriends: userId
             });
 
-            if(existUserAInB) {
+            if (existUserAInB) {
                 await User.updateOne({
                     _id: myUserId
                 }, {
-                    $pull: { acceptFriends: userId }
+                    $pull: {
+                        acceptFriends: userId
+                    }
                 });
             }
 
@@ -95,11 +105,64 @@ module.exports = async (res) => {
                 requestFriends: myUserId
             });
 
-            if(existUserBInA) {
+            if (existUserBInA) {
                 await User.updateOne({
                     _id: userId
                 }, {
-                    $pull: { requestFriends: myUserId }
+                    $pull: {
+                        requestFriends: myUserId
+                    }
+                });
+            }
+        });
+
+        // Người dùng chấp nhận kết bạn
+        socket.on("CLIENT_ACCEPT_FRIEND", async (userId) => {
+            const myUserId = res.locals.user.id;
+
+            // Thêm {user_id, room_chat_id} của A vào friendsList của B
+            // Xoa id cua A vao acceptFriends cua B
+            const existUserAInB = await User.findOne({
+                _id: myUserId,
+                acceptFriends: userId
+            });
+
+            if (existUserAInB) {
+                await User.updateOne({
+                    _id: myUserId
+                }, {
+                    $push: {
+                        friendList: {
+                            user_id: userId,
+                            room_chat_id: "",
+                        }
+                    },
+                    $pull: {
+                        acceptFriends: userId
+                    }
+                });
+            }
+
+            // Thêm {user_id, room_chat_id} của B vào friendsList của A
+            // Xoa id cua B vao requestFriends cua A
+            const existUserBInA = await User.findOne({
+                _id: userId,
+                requestFriends: myUserId
+            });
+
+            if (existUserBInA) {
+                await User.updateOne({
+                    _id: userId
+                }, {
+                    $push: {
+                        friendList: {
+                            user_id: myUserId,
+                            room_chat_id: "",
+                        }
+                    },
+                    $pull: {
+                        requestFriends: myUserId
+                    }
                 });
             }
         });
