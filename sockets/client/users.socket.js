@@ -40,6 +40,17 @@ module.exports = async (res) => {
                     }
                 });
             }
+
+            const infoUsers = await User.findOne({
+                _id: userId
+            });
+
+            const lengthAcceptFriends = infoUsers.acceptFriends.length;
+
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            });
         });
 
         // Người dùng hủy gửi yêu cầu kết bạn
