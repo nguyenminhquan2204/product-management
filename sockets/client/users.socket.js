@@ -41,6 +41,7 @@ module.exports = async (res) => {
                 });
             }
 
+            // Lấy độ dài acceptFriends
             const infoUsers = await User.findOne({
                 _id: userId
             });
@@ -50,6 +51,16 @@ module.exports = async (res) => {
             socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
                 userId: userId,
                 lengthAcceptFriends: lengthAcceptFriends
+            });
+
+            // Lấy thông tin ... return ... 
+            const infoUserA = await User.findOne({
+                _id: myUserId,
+            }).select("id avatar fullName");
+
+            socket.broadcast.emit("SERVER_RETURN_INFO_ACCEPT_FRIEND", {
+                userId: userId,
+                infoUserA: infoUserA
             });
         });
 
@@ -88,6 +99,17 @@ module.exports = async (res) => {
                     }
                 });
             }
+
+            const infoUsers = await User.findOne({
+                _id: userId
+            });
+
+            const lengthAcceptFriends = infoUsers.acceptFriends.length;
+
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            });
         });
 
         // Người dùng từ chối kết bạn
