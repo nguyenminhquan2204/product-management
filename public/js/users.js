@@ -74,67 +74,85 @@ socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
 // SERVER_RETURN_INFO_ACCEPT_FRIEND
 socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
     const dataUsersAccept = document.querySelector("[data-users-accept]");
-    const userId = dataUsersAccept.getAttribute("data-users-accept");
+    if(dataUsersAccept) {
+        const userId = dataUsersAccept.getAttribute("data-users-accept");
 
-    if (userId == data.userId) {
-        // Ve user ra giao dien
-        const newBoxUser = document.createElement("div");
-        newBoxUser.classList.add("col-6");
-        newBoxUser.setAttribute("user-id", data.infoUserA._id);
-
-        newBoxUser.innerHTML = `
-            <div class="box-user">
-                <div class="inner-avatar">
-                    <img src="/images/avatar.png" alt="${data.infoUserA.fullName}">
-                </div>
-                <div class="inner-info">
-                    <div class="inner-name">${data.infoUserA.fullName}</div>
-                    <div class="inner-buttons">
-                        <button class="btn btn-sm btn-primary mr-1"
-                            btn-accept-friend="${data.infoUserA._id}">
-                            Chấp nhận
-                        </button>
-                        <button class="btn btn-sm btn-secondary mr-1"
-                            btn-refuse-friend="${data.infoUserA._id}">
-                            Xóa
-                        </button>
-                        <button class="btn btn-sm btn-secondary mr-1"
-                            btn-deleted-friend="" disabled="">
-                            Đã xóa
-                        </button>
-                        <button class="btn btn-sm btn-primary mr-1"
-                            btn-accepted-friend="" disabled="">
-                            Đã chấp nhận
-                        </button>
+        if (userId == data.userId) {
+            // Ve user ra giao dien
+            const newBoxUser = document.createElement("div");
+            newBoxUser.classList.add("col-6");
+            newBoxUser.setAttribute("user-id", data.infoUserA._id);
+    
+            newBoxUser.innerHTML = `
+                <div class="box-user">
+                    <div class="inner-avatar">
+                        <img src="/images/avatar.png" alt="${data.infoUserA.fullName}">
+                    </div>
+                    <div class="inner-info">
+                        <div class="inner-name">${data.infoUserA.fullName}</div>
+                        <div class="inner-buttons">
+                            <button class="btn btn-sm btn-primary mr-1"
+                                btn-accept-friend="${data.infoUserA._id}">
+                                Chấp nhận
+                            </button>
+                            <button class="btn btn-sm btn-secondary mr-1"
+                                btn-refuse-friend="${data.infoUserA._id}">
+                                Xóa
+                            </button>
+                            <button class="btn btn-sm btn-secondary mr-1"
+                                btn-deleted-friend="" disabled="">
+                                Đã xóa
+                            </button>
+                            <button class="btn btn-sm btn-primary mr-1"
+                                btn-accepted-friend="" disabled="">
+                                Đã chấp nhận
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
-        dataUsersAccept.appendChild(newBoxUser);
-        // ------ Het
+            `;
+            dataUsersAccept.appendChild(newBoxUser);
+            // ------ Het
+    
+            // Xoa loi moi ket ban
+            const btnRefuseFriend = newBoxUser.querySelector("[btn-refuse-friend]");
+            btnRefuseFriend.addEventListener("click", () => {
+                btnRefuseFriend.closest(".box-user").classList.add("refuse");
+    
+                const userId = btnRefuseFriend.getAttribute("btn-refuse-friend");
+    
+                socket.emit("CLIENT_REFUSE_FRIEND", userId);
+            });
+            // ------ Het
+    
+            // Chap nhan loi moi ket ban
+            const btnAcceptFriend = newBoxUser.querySelector("[btn-accept-friend]");
+            btnAcceptFriend.addEventListener("click", () => {
+                btnAcceptFriend.closest(".box-user").classList.add("accepted");
+    
+                const userId = btnAcceptFriend.getAttribute("btn-accept-friend");
+    
+                socket.emit("CLIENT_ACCEPT_FRIEND", userId);
+            });
+        } 
+    }
+  
+    // ------ Het
 
-        // Xoa loi moi ket ban
-        const btnRefuseFriend = newBoxUser.querySelector("[btn-refuse-friend]");
-        btnRefuseFriend.addEventListener("click", () => {
-            btnRefuseFriend.closest(".box-user").classList.add("refuse");
+    // Trang danh sach nguoi dung
+    const dataUsersNotFriend = document.querySelector("[data-users-not-friend]");
+    if(dataUsersNotFriend) {
+        const userId = dataUsersNotFriend.getAttribute("data-users-not-friend");
 
-            const userId = btnRefuseFriend.getAttribute("btn-refuse-friend");
-
-            socket.emit("CLIENT_REFUSE_FRIEND", userId);
-        });
-        // ------ Het
-
-        // Chap nhan loi moi ket ban
-        const btnAcceptFriend = newBoxUser.querySelector("[btn-accept-friend]");
-        btnAcceptFriend.addEventListener("click", () => {
-            btnAcceptFriend.closest(".box-user").classList.add("accepted");
-
-            const userId = btnAcceptFriend.getAttribute("btn-accept-friend");
-
-            socket.emit("CLIENT_ACCEPT_FRIEND", userId);
-        });
-        // ------ Het
-    }   
+        if(userId == data.userId) {
+            const boxUserRemove = dataUsersNotFriend.querySelector(`[user-id="${data.infoUserA._id}"]`);
+            
+            if(boxUserRemove) {
+                dataUsersNotFriend.removeChild(boxUserRemove);
+            }
+        }
+    }
+    // Het trang danh sach nguoi dung
 });
 // End SERVER_RETURN_INFO_ACCEPT_FRIEND
 
