@@ -20,7 +20,7 @@ module.exports = (query) => {
     if(query.status) {
         const index = filterStatus.findIndex(item => item.status == query.status);
         // console.log(index);
-        filterStatus[index].class = "active";
+        filterStatus[index].class = "active";   
     } else {
         const index = filterStatus.findIndex(item => item.status == "");
         filterStatus[index].class = "active";

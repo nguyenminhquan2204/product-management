@@ -1,0 +1,36 @@
+extends ../../layouts/default.pug
+
+block main
+    if(blog.title)
+        h1(class="mb-4") #{blog.title}
+
+    if(blog.thumbnail)
+        div(class="mb-4")
+            img(
+                src=blog.thumbnail
+                style="width: 100px"
+            )
+    
+    if(productParent)
+        div(class="mb-4") Danh mục cha: <b>#{productParent.title}</b>
+
+    if(blog.status)
+        div(class="mb-4")
+            span Trạng thái: 
+            if(blog.status === "active")
+                span(class="badge badge-success") Hoạt động 
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+            
+    if(blog.position)
+        div(class="mb-4") Vị trí: <b>#{blog.position}</b>
+
+    if(blog.description)
+        div(class="mb-4") !{blog.description}
+
+    a(
+        href=`${prefixAdmin}/blogs/edit/${blog.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa
+
+    script(src="/admin/js/blogs.js") 

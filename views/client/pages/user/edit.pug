@@ -2,57 +2,61 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
+    +alert-error(5000)
+    +alert-success(5000)
 
-    if(role.permissions.includes("accounts_create"))
-        h1(class="mb-4") Thêm mới tài khoản
+    .container.border.border-dark.my-3
 
-        +alert-error(5000)
+        h1(class="mb-4") Chỉnh sửa thông tin
 
         form(
-            action=`${prefixAdmin}/accounts/create`
+            action=`/user/editInfo/${user.id}?_method=PATCH`
+            id="form-edit-product"
             method="POST"
             enctype="multipart/form-data"
-        )
+        )   
             div(class="form-group")
-                label(for="fullName") Họ tên *
+                label(for="fullName") FullName
                 input(
                     type="text"
                     class="form-control"
                     id="fullName"
                     name="fullName"
                     required
-                ) 
+                    value=user.fullName
+                )
             div(class="form-group")
-                label(for="email") Email *
+                label(for="email") Email 
                 input(
                     type="email"
                     class="form-control"
                     id="email"
                     name="email"
-                    required
-                ) 
+                    required 
+                    value=user.email
+                )
             div(class="form-group")
-                label(for="password") Mật khẩu *
+                label(for="password") Password 
                 input(
                     type="password"
                     class="form-control"
                     id="password"
                     name="password"
-                    required
-                ) 
+                )
             div(class="form-group")
-                label(for="phone") Số điện thoại
+                label(for="phone") Phone 
                 input(
-                    type="phone"
+                    type="text"
                     class="form-control"
                     id="phone"
                     name="phone"
-                ) 
+                    value=(user.phone ? user.phone : "")
+                )
             div(
                 class="form-group"
                 upload-image
             )
-                label(for="avatar") Avatar
+                label(for="avatar") Avatar 
                 input(
                     type="file"
                     class="form-control-file"
@@ -60,18 +64,22 @@ block main
                     name="avatar"
                     accept="image/*"
                     upload-image-input
-                ) 
+                )
                 img(
-                    src=""
-                    class="image-preview"
+                    src=user.avatar
                     upload-image-preview
+                    class="image-preview"
                 )
             div(class="form-group")
-                label(for="role_id") Phân quyền
-                select(name="role_id" id="role_id" class="form-control")
-                    option(disabled) -- Chọn --
-                    each item in roles
-                        option(value=item.id) #{item.title}
+                label(for="friend") Danh sách bạn bè 
+                input(
+                    type="text"
+                    class="form-control"
+                    id="friend"
+                    name="friend"
+                    value=nameFriends
+                    readonly
+                )
             div(class="form-group form-check form-check-inline")
                 input(
                     type="radio"
@@ -79,8 +87,8 @@ block main
                     id="statusActive"
                     name="status"
                     value="active"
-                    checked
-                ) 
+                    checked=(user.status == "active" ? true : false)
+                )
                 label(for="statusActive" class="form-check-label") Hoạt động
             div(class="form-group form-check form-check-inline")
                 input(
@@ -89,10 +97,11 @@ block main
                     id="statusInActive"
                     name="status"
                     value="inactive"
+                    checked=(user.status == "inactive" ? true : false)
                 )
-                label(for="statusInActive" class="form-check-label") Dừng hoạt động 
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
             div(class="form-group")
                 button(
                     type="submit"
                     class="btn btn-primary"
-                ) Tạo mới
+                ) Cập nhật

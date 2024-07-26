@@ -7,9 +7,15 @@ block main
             include ../../partials/list-btn-users.pug
 
         .row    
-            .col-12 
+            .col-3
                 +box-head(`${chats.roomTitle}`)
-        
+            .col-9
+                if(chats.superAdmin == user.id)
+                    button(class="edit-name-room btn btn-success") Đổi tên phòng
+                    //- a(href=`/chat/addMember/${chats.id}` class="ml-2 btn btn-success my-3") Thêm thành viên
+                    a(href=`/chat/addMember/${chats.id}` class="ml-2 btn btn-success my-3") Thêm thành viên
+                    button(class="member ml-2 btn btn-success") Xem thành viên
+                    a(href=`/chat/deleteMember/${chats.id}` class="ml-2 btn btn-success my-3") Xóa thành viên
         .row
             .col-12 
                 .chat(my-id=user.id)
@@ -22,7 +28,7 @@ block main
                                 if(chat.infoUser.id != user.id)
                                     .inner-name #{chat.infoUser.fullName}
                                 if(chat.content)
-                                    .inner.content
+                                    .inner-content
                                         | #{chat.content}
                                 if(chat.images)
                                     .inner-images 
@@ -52,6 +58,16 @@ block main
                                 i(class="fa-regular fa-face-smile")
                             button
                                 i.fa-solid.fa-paper-plane    
+
+    form(
+        action=`/chat/editRoomTitle/${chats.id}`
+        id="form-change-roomTitle"
+    ) 
+
+    form(
+        action=`/chat/member/${chats.id}`
+        id="form-member"
+    ) 
     
     div(class="tooltip" role="tooltip")
         emoji-picker(class="dark")                     

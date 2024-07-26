@@ -123,3 +123,29 @@ module.exports.friends = async (req, res) => {
         users: users
     });
 }
+
+// [GET] /users/unfriend/:id
+module.exports.unFriend = async (req, res) => {
+    const myUser = await User.findOne({
+        tokenUser: req.cookies.tokenUser,
+    });
+    const user = await User.findOne({
+        _id: req.params.id
+    });
+
+    try {
+        await User.updateOne({ _id: myUser.id }, {
+            $pull: { friendList: { user_id: user.id }}
+        });
+
+        await User.updateOne({ _id: user.id }, {
+            $pull: { friendList: { user_id: myUser.id }}
+        });
+
+        req.flash("success", "Hủy kết thành công!");
+    } catch (error) {
+        req.flash("error", "Hủy kết bạn không thành công!");
+    }
+
+    res.redirect("back");
+};

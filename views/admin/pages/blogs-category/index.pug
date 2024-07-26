@@ -1,17 +1,17 @@
 extends ../../layouts/default.pug
+
 include ../../mixins/alert.pug
-include ../../mixins/form-change-multi.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
-include ../../mixins/table-tree.pug
-include ../../mixins/sortCategory.pug
+include ../../mixins/form-change-multi.pug
 include ../../mixins/pagination.pug
+include ../../mixins/table-tree-blogs.pug
 
 block main
-    if(role.permissions.includes("products-category_view"))
+    if(role.permissions.includes("blogs-category_view"))
         +alert-success(5000)
 
-        h1 Danh mục sản phẩm
+        h1 #{pageTitle}
 
         .card.mb-3
             .card-header Bộ lọc và Tìm kiếm
@@ -27,13 +27,13 @@ block main
                 .card-body
                     .row
                         .col-8
-                            +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)      
+                            +form-change-multi(`${prefixAdmin}/blogs-category/change-multi?_method=PATCH`)      
                         .col-4
-                            if(role.permissions.includes("products-category_create"))
+                            if(role.permissions.includes("blogs-category_create"))
                                 a(
-                                    href=`${prefixAdmin}/products-category/create`
+                                    href=`${prefixAdmin}/blogs-category/create`
                                     class="btn btn-outline-success"
-                                ) + Thêm mới
+                                ) + Thêm mới bài viết
 
                     table(
                         class="table table-hover table-sm"
@@ -46,39 +46,27 @@ block main
                                 th STT
                                 th Hình ảnh
                                 th Tiêu đề
+                                th Miêu tả
                                 th Vị trí
                                 th Trạng thái
                                 th Hành động
                         tbody
-                            +table-tree(records) 
+                            +table-tree-blogs(data)
 
         //- +pagination(pagination)
 
         form(
             action=""
             method="POST"
-            id="form-change-status"
-            data-path=`${prefixAdmin}/products-category/change-status`
-        ) 
+            id="form-delete-blog"
+            data-path=`${prefixAdmin}/blogs-category/delete`
+        )
 
         form(
             action=""
             method="POST"
-            id="form-delete-item"
-            data-path=`${prefixAdmin}/products-category/delete`
+            id="form-change-status"
+            data-path=`${prefixAdmin}/blogs-category/change-status`
         )
 
-        script(src="/admin/js/product-category.js") 
-
-//- _id
-//- title
-//- parent_id
-//- description
-//- thumbnail
-//- status
-//- position
-//- deleted
-//- deletedAt
-//- createAt
-//- updateAt
-//- slug
+        script(src="/admin/js/blog-category.js") 

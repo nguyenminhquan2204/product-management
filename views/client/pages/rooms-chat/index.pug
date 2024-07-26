@@ -1,7 +1,11 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 
 block main 
+    +alert-success(5000)
+    +alert-error(5000)
+    
     .container.my-3 
         .row 
             .col-12 
@@ -15,17 +19,22 @@ block main
                 ) Tạo phòng chat 
         
         .row
-            .col-6 
-                div(class="box-room")
-                    div(class="inner-avatar")
-                        img(
-                            src="/images/avatar.png"
-                            alt=""
-                        )
-                    div(class="inner-info")
-                        div(class="inner-name") Phòng abc
-                        div(class="inner-buttons")
-                            a(
-                                href="#"
-                                class="btn btn-sm btn-primary mr-1"
-                            ) Nhắn tin 
+            each room in listRoomChat
+                .col-6 
+                    div(class="box-room")
+                        div(class="inner-avatar")
+                            img(
+                                src="/images/avatar.png"
+                                alt=room.title
+                            )
+                        div(class="inner-info")
+                            div(class="inner-name") #{room.title}
+                            div(class="inner-buttons")
+                                a(
+                                    href=`/chat/${room.id}`
+                                    class="btn btn-sm btn-primary mr-1"
+                                ) Nhắn tin 
+                                a(
+                                    href=`/rooms-chat/delete/${room.id}`
+                                    class="btn btn-sm btn-primary mr-1"
+                                ) Xóa

@@ -5,6 +5,7 @@ const systemConfig = require("../../config/system");
 const searchHelper = require("../../helpers/search");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const createTreeHelper = require("../../helpers/createTree");
+const paginationHelper = require("../../helpers/pagination");
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
@@ -25,9 +26,21 @@ module.exports.index = async (req, res) => {
     const objectSearch = searchHelper(req.query);
     if(objectSearch.regex) {
         find.title = objectSearch.regex;
-        console.log(find.title);
+        // console.log(find.title);
     }
     // End Search
+
+    // // Pagination
+    // const countProductCategorys = await ProductCategory.countDocuments(find);
+    // let objectPagination = paginationHelper(
+    //     {
+    //         currentPage: 1,
+    //         limitItems: 20
+    //     },
+    //     req.query,
+    //     countProductCategorys
+    // );
+    // // End pagination
 
     // Sort
     let sort = {};
@@ -38,7 +51,8 @@ module.exports.index = async (req, res) => {
     }
     // End Sort
 
-    const records = await ProductCategory.find(find);
+    const records = await ProductCategory.find(find)
+        .sort(sort);
 
     const newRecords = createTreeHelper.tree(records);
 
@@ -47,6 +61,7 @@ module.exports.index = async (req, res) => {
         records: newRecords,
         filterStatus: filterStatus,
         keyword: objectSearch.keyword,
+        // pagination: objectPagination
     });
 };
 
@@ -115,13 +130,13 @@ module.exports.editPatch = async(req, res) => {
         await ProductCategory.updateOne({ _id: id }, req.body );
         req.flash("success", "Cập nhật thành công!");
     } catch (error) {
-        req.flash("success", "Cập nhật thất bại!");
+        req.flash("error", "Cập nhật thất bại!");
     }
 
     res.redirect(`${systemConfig.prefixAdmin}/products-category`);
 };
 
-// [GET] /admin/products-category/detail:id
+// [GET] /admin/products-category/detail/:id
 module.exports.detail = async(req, res) => {
     try{
         const find = {
@@ -131,15 +146,16 @@ module.exports.detail = async(req, res) => {
 
         const record = await ProductCategory.findOne(find);
 
-        const recordParent = {};
+        let data;
         if(record.parent_id) {
-            recordParent = await ProductCategory.findOne({ deleted: false, _id: record.parent_id });
+            data = await ProductCategory.findOne({ deleted: false, _id: record.parent_id });
         }
+        // console.log(data);
         
         res.render("admin/pages/products-category/detail", {
             pageTitle: record.title,
             product: record,
-            productParent: recordParent,
+            productParent: data,
         });
     } catch(error) {
         res.redirect(`${systemConfig.prefixAdmin}/products-category`);

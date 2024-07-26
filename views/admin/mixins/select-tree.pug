@@ -7,3 +7,4 @@ mixin select-tree(items, level = 1, parent_id = "")
         ) #{prefix}#{item.title}
             if(item.children && item.children.length > 0)
                 +select-tree(item.children, level + 1, parent_id)
+                

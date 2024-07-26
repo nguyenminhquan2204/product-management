@@ -50,7 +50,7 @@ module.exports.edit = async (req, res) => {
             data: data,
         });
     } catch(error) {
-        res.redirect(`${systemConfig.prefixAdmin}/roles`);
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     }
 };
 
@@ -65,7 +65,7 @@ module.exports.editPatch = async (req, res) => {
     } catch(error) {
         req.flash("error", "Cập nhật nhóm quyền thất bại!");
     }
-    res.redirect(`${systemConfig.prefixAdmin}/roles`);
+    res.redirect(`/${systemConfig.prefixAdmin}/roles`);
 };
 
 // [GET] /admin/roles/permisssions
@@ -118,7 +118,7 @@ module.exports.detail = async (req, res) => {
     });
 };
 
-// [DELETE] /admin/roles/delete/id
+// [DELETE] /admin/roles/delete/:id
 module.exports.delete = async(req, res) => {
     const id = req.params.id;
 

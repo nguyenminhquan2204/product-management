@@ -1,7 +1,11 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 
 block main 
+    +alert-success(5000)
+    +alert-error(5000)
+    
     .container.my-3 
         include ../../partials/list-btn-users.pug
 
@@ -25,6 +29,10 @@ block main
                                     href=`/chat/${user.roomChatId}`
                                     class="btn btn-sm btn-primary mr-1"
                                 ) Nhắn tin
+                                a(
+                                    href=`/users/unfriend/${user.id}`
+                                    class="btn btn-sm btn-secondary mr-1"
+                                ) Hủy kết bạn
                         div(
                             class="inner-status"
                             status=user.statusOnline

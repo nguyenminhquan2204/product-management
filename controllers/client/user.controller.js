@@ -207,10 +207,72 @@ module.exports.resetPasswordPost = async (req, res) => {
     res.redirect("/");
 };
 
-// [GET] /user/info
+// [GET] /user/info/:id
 module.exports.info = async (req, res) => {
+    const user = await User.findOne({
+        deleted: false,
+        _id: req.params.id
+    });
+    
+    let listFriend = [];
+
+    if(user.friendList) {
+        const list = user.friendList.map(async (user) => {
+            const friend = await User.findOne({
+                _id: user.user_id,
+                deleted: false
+            }).select("fullName");
+    
+            return friend;
+        });
+        
+        listFriend = await Promise.all(list);
+    }
+    
 
     res.render("client/pages/user/info", {
         pageTitle: "Thông tin tài khoản",
+        listFriend: listFriend,
+        myUser: user
     });
+};
+
+// [GET] /user/editInfo/:id
+module.exports.editInfo = async (req, res) => {
+    const user = await User.findOne({ _id: req.params.id });
+
+    let users = [];
+    const membersName = await Promise.all(user.friendList.map(async (user) => {
+        const name = await User.findOne({ _id: user.user_id}).select("fullName");
+        users.push(name);
+    }));
+    
+    let nameFriends = "";
+    users.forEach(user => {
+        nameFriends += user.fullName + ", "
+    });
+
+    nameFriends = nameFriends.slice(0, nameFriends.length-2);
+    console.log(nameFriends);
+    
+
+    res.render("client/pages/user/edit", {
+        pageTitle: "Chỉnh sửa thông tin",
+        user: user,
+        nameFriends: nameFriends
+    });
+};
+
+// [PATCH] /user/editInfo/:id
+module.exports.editInfoPatch = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        await User.updateOne({ _id: id }, req.body);
+        req.flash("success", "Cập nhật thông tin thành công!");
+    } catch (error) {
+        req.flash("error", "Cập nhật thông tin thất bại!");
+    }
+
+    res.redirect(`/user/info/${id}`)
 };

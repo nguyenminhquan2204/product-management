@@ -107,3 +107,59 @@ module.exports.editPatch = async (req, res) => {
 
     res.redirect("back");
 };
+
+// [GET] /admin/detail/:id
+module.exports.detail = async (req, res) => {
+    try {
+        const data = await Account.findOne({
+            deleted: false,
+            _id: req.params.id
+        });
+
+        if(data.role_id) {
+            const role = await Role.findOne({
+                _id: data.role_id,
+            }).select("title");
+
+            data['role'] = role;
+        }   
+
+        res.render("admin/pages/accounts/detail", {
+            pageTitle: data.fullName,
+            account: data
+        });
+    } catch (error) {
+        req.flash("error", "Lỗi xảy ra!!");
+        res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
+    }
+};
+
+// [GET] /admin/accounts/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    try {
+        await Account.updateOne({ _id: req.params.id }, {
+            status: req.params.status
+        });
+
+        req.flash("success", "Cập nhật trạng thái thành công.");
+
+    } catch (error) {
+        req.flash("error", "Lỗi xảy ra.!!");
+    }
+    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+};
+
+// [DELETE] /admin/accounts/delete/:id
+module.exports.deleteItem = async (req, res) => {
+    try {
+        await Account.updateOne({ _id: req.params.id }, {
+            deleted: true,
+            deletedAt: new Date()
+        });
+
+        req.flash("success", "Xoá thành công.!");
+    } catch (error) {
+        req.flash("error", "Lỗi xảy ra.!!");
+        res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
+    }
+};

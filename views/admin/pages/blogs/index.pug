@@ -9,10 +9,11 @@ include ../../mixins/moment.pug
 
 block main
 
-    if(role.permissions.includes("products_view"))
+    if(role.permissions.includes("blogs_view"))
         +alert-success(5000)
+        +alert-error(5000)
 
-        h1 Danh sách sản phẩm
+        h1 #{pageTitle}
 
         .card.mb-3
             .card-header Bộ lọc và Tìm kiếm
@@ -35,12 +36,12 @@ block main
                 .card-body
                     .row
                         .col-8
-                            if(role.permissions.includes("products_edit"))
-                                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)      
+                            if(role.permissions.includes("blogs_edit"))
+                                +form-change-multi(`${prefixAdmin}/blogs/change-multi?_method=PATCH`)      
                         .col-4
-                            if(role.permissions.includes("products_create"))
+                            if(role.permissions.includes("blogs_create"))
                                 a(
-                                    href=`${prefixAdmin}/products/create`
+                                    href=`${prefixAdmin}/blogs/create`
                                     class="btn btn-outline-success"
                                 ) + Thêm mới
 
@@ -55,14 +56,14 @@ block main
                                 th STT
                                 th Hình ảnh
                                 th Tiêu đề
-                                th Giá
+                                th Mô tả
                                 th Vị trí
                                 th Trạng thái
                                 th Người tạo
                                 th Người cập nhật
                                 th Hành động
                         tbody
-                            each item, index in products
+                            each item, index in blogs
                                 tr
                                     td
                                         input(
@@ -79,7 +80,7 @@ block main
                                             height="auto"
                                         )
                                     td #{item.title}
-                                    td #{item.price}$
+                                    td !{item.description}
                                     td
                                         input(
                                             type="number"
@@ -89,7 +90,7 @@ block main
                                             name="position"
                                         )
                                     td
-                                        if(role.permissions.includes("products_edit"))
+                                        if(role.permissions.includes("blogs_edit"))
                                             if(item.status == "active")
                                                 a(
                                                     href="javascript:;"
@@ -129,15 +130,15 @@ block main
                                                 +formatDateTime(updatedBy.updatedAt)
                                     td
                                         a(
-                                            href=`${prefixAdmin}/products/detail/${item.id}`
+                                            href=`${prefixAdmin}/blogs/detail/${item.id}`
                                             class="btn btn-secondary btn-sm"
                                         ) Chi tiết
-                                        if(role.permissions.includes("products_edit"))
+                                        if(role.permissions.includes("blogs_edit"))
                                             a(
-                                                href=`${prefixAdmin}/products/edit/${item.id}`
+                                                href=`${prefixAdmin}/blogs/edit/${item.id}`
                                                 class="btn btn-warning btn-sm"
                                             ) Sửa
-                                        if(role.permissions.includes("products_delete"))
+                                        if(role.permissions.includes("blogs_delete"))
                                             button(
                                                 class="btn btn-danger btn-sm ml-1"
                                                 data-id=item.id
@@ -150,14 +151,14 @@ block main
             action=""
             method="POST"
             id="form-change-status"
-            data-path=`${prefixAdmin}/products/change-status`
+            data-path=`${prefixAdmin}/blogs/change-status`
         ) 
 
         form(
             action=""
             method="POST"
             id="form-delete-item"
-            data-path=`${prefixAdmin}/products/delete`
+            data-path=`${prefixAdmin}/blogs/delete`
         )
 
-        script(src="/admin/js/product.js") 
+        script(src="/admin/js/blog.js") 

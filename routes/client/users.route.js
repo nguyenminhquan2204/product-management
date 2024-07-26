@@ -11,4 +11,6 @@ router.get("/accept", controller.accept);
 
 router.get("/friends", controller.friends);
 
+router.get("/unfriend/:id", controller.unFriend);
+
 module.exports = router;

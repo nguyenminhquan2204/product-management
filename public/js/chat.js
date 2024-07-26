@@ -1,5 +1,37 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
 
+// Add Member
+const buttonsAddMember = document.querySelectorAll("[button-add-member]");
+if(buttonsAddMember.length > 0) {
+    const formAddMember = document.querySelector("[form-add-member]");
+
+    buttonsAddMember.forEach(button => {
+        button.addEventListener("click", () => {
+            const path = formAddMember.action + `/${button.value}?_method=PATCH`;
+            formAddMember.action = path;
+        
+            formAddMember.submit();
+        });
+    });
+}
+// End Add Member
+
+// Delete Member
+const buttonsDeleteMember = document.querySelectorAll("[button-delete-member]");
+if(buttonsDeleteMember.length > 0) {
+    const formDeleteMember = document.querySelector("[form-delete-member]");
+
+    buttonsDeleteMember.forEach(button => {
+        button.addEventListener("click", () => {
+            const path = formDeleteMember.action + `/${button.value}?_method=PATCH`;
+            formDeleteMember.action = path;
+            
+            formDeleteMember.submit();
+        });
+    });
+}
+// End Delete Member
+
 // Function Show Typing
 var timeOut;
 const showTyping = () => {
@@ -185,3 +217,27 @@ if (chatBody) {
     const gallery = new Viewer(chatBody);
 }
 // End Preview Image
+
+// Edit Room Title
+const buttonChange = document.querySelector(".edit-name-room");
+const formChangeRoomTitle = document.querySelector("#form-change-roomTitle");
+if(buttonChange && formChangeRoomTitle) {
+    buttonChange.addEventListener("click", (e) => {
+        // const dataPath = formChangeRoomTitle.getAttribute("action");
+        formChangeRoomTitle.submit();
+
+    });
+}
+// End Edit Room Title
+
+// Member
+const buttonMember = document.querySelector(".member");
+const formMember = document.querySelector("#form-member");
+if(buttonMember && formMember) {
+    buttonMember.addEventListener("click", () => {
+        formMember.submit();
+    });
+}
+// End Member
+
+

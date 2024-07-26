@@ -9,7 +9,7 @@ block main
             .card-body
                 .row
                     .col-8
-                    .col-4.text-right
+                    .col-4.mb-4
                         if(role.permissions.includes("accounts_create"))
                             a(
                                 href=`${prefixAdmin}/accounts/create`
@@ -69,7 +69,7 @@ block main
 
                                 td
                                     a(
-                                        href=`${prefixAdmin}/products/detail/${item.id}`
+                                        href=`${prefixAdmin}/accounts/detail/${item.id}`
                                         class="btn btn-secondary btn-sm"
                                     ) Chi tiết
                                     if(role.permissions.includes("accounts_edit"))
@@ -83,3 +83,18 @@ block main
                                             data-id=item.id
                                             button-delete
                                         ) Xóa
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/accounts/delete`
+        )
+
+        form(
+            action=""
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/accounts/change-status`
+        )
+        
+        script(src="/admin/js/account.js") 

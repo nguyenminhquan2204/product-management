@@ -21,7 +21,7 @@ module.exports.index = async (req, res) => {
     // console.log(newProducts);
 
     res.render("client/pages/products/index", {
-       pageTitle: "Danh sach san pham", 
+       pageTitle: "Danh sách sản phẩm", 
        products: newProducts
     });
 };

@@ -27,7 +27,7 @@ module.exports.index = async (req, res) => {
     const objectSearch = searchHelper(req.query);
     if(objectSearch.regex) {
         find.title = objectSearch.regex;
-        console.log(find.title);
+        // console.log(find.title);
     }
 
 // Pagination

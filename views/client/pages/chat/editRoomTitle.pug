@@ -1,0 +1,33 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block main 
+    .container
+        h1(class="mb-4") Cập nhật tên nhóm
+
+        +alert-error(5000)
+        +alert-success(5000)
+
+        form(
+            action=`/chat/editRoomTitle/${room.id}?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="email") Email *
+                input(
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    value=room.title
+                ) 
+            div(class="form-group")
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Cập nhật
+
+    block script
+        script(type="module" src="/js/chat.js")

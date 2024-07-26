@@ -4,7 +4,36 @@ include ../../mixins/box-head.pug
 block main 
     .container.my-3 
         .row
-            .col-12 
+            .col-6
                 +box-head("Thông tin tài khoản")
+            .col-6 
+                a(
+                    href=`/user/editInfo/${user.id}`
+                    class="btn btn-sm btn-success mr-1"
+                ) Sửa thông tin
         
-        div #{user}
+        .row
+            .col-12 
+                .card.mb-4 
+                    .card-header Thông tin tài khoản
+                    .card-body 
+                        if(myUser.avatar)
+                            div(class="mb-4")
+                                img(src=myUser.avatar width="150px" class="mb-3")
+                        if(myUser.fullName)
+                            div(class="mb-4") Họ tên: <b>#{myUser.fullName}</b>
+                        if(myUser.email)
+                            div(class="mb-4") Email: <b>#{myUser.email}</b>
+                        if(myUser.phone)
+                            div(class="mb-4") Phone: <b>#{myUser.phone}</b>
+                        if(myUser.status)
+                            div(class="mb-4")
+                                span Trạng thái: 
+                                    if(myUser.status === "active")
+                                        span(class="badge badge-success") Hoạt động 
+                                    else
+                                        span(class="badge badge-danger") Dừng hoạt động
+                        if(listFriend)
+                            span Danh sách bạn bè: 
+                            each item in listFriend
+                                <b>#{item.fullName} ,</b>

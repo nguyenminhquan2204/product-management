@@ -3,8 +3,17 @@ const RoomChat = require("../../models/room-chat.model");
 
 // [GET] /rooms-chat
 module.exports.index = async (req, res) => {
+    const userId = res.locals.user.id;
+
+    const listRoomChat = await RoomChat.find({
+        "users.user_id": userId,
+        typeRoom: "group",
+        deleted: false
+    });
+
     res.render("client/pages/rooms-chat/index", {
         pageTitle: "Danh sách phòng",
+        listRoomChat: listRoomChat
     });
 }; 
 
@@ -37,6 +46,8 @@ module.exports.createPost = async (req, res) => {
         users: []
     }
 
+    // console.log(dataChat);
+
     userId.forEach(userId => {
         dataChat.users.push({
             user_id: userId,
@@ -49,9 +60,22 @@ module.exports.createPost = async (req, res) => {
         role: "superAdmin"
     });
 
-    // console.log(dataChat);
     const room = new RoomChat(dataChat);
     await room.save();
 
     res.redirect(`/chat/${room.id}`);
 }; 
+
+// [PATCH] /rooms-chat/delete/:id
+module.exports.deleteRoom = async (req, res) => {
+    try {
+        await RoomChat.updateOne({ _id: req.params.id }, {
+            deleted: true
+        });
+        req.flash("success", "Xóa thành công!");
+    } catch (error) {
+        req.flash("error", "Xóa không thành công!");
+    }
+
+    res.redirect("back");
+};

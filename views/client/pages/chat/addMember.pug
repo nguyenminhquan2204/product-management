@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block main 
+    .container
+        h1(class="mb-4") Thêm mới thành viên
+
+        +alert-error(5000)
+        +alert-success(5000)
+
+        .row
+            .col-12
+                +box-head(room.title)
+        
+        .row
+            each user in users
+                .col-6(user-id=user.id)
+                    div(class="box-user")
+                        div(class="inner-avatar")
+                            img(
+                                src=(user.avatar ? user.avatar : "/images/avatar.png")
+                                alt=user.fullName
+                            )
+                        div(class="inner-info")
+                            div(class="inner-name") #{user.fullName} 
+                            div(class="inner-buttons")
+                                a(
+                                    href=`/user/info/${user.id}`
+                                    class="btn btn-sm btn-primary mr-1"
+                                ) Chi tiết
+                                button(
+                                    class="btn btn-sm btn-primary mr-1"
+                                    value=user.id 
+                                    button-add-member
+                                ) Thêm
+    
+    form(
+        action=`/chat/addMember/${room.id}`
+        form-add-member
+        method="POST"
+    )
+            
+    block script
+        script(type="module" src="/js/chat.js")
