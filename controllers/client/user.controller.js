@@ -11,7 +11,6 @@ const sendMailHelper = require("../../helpers/sendMail");
 module.exports.register = async (req, res) => {
     res.render("client/pages/user/register", {
         pageTitle: "Đăng ký tài khoản",
-
     });
 };
 
@@ -43,10 +42,8 @@ module.exports.registerPost = async (req, res) => {
 
 // [GET] /user/login
 module.exports.login = async (req, res) => {
-    
     res.render("client/pages/user/login", {
         pageTitle: "Đăng nhập tài khoản",
-
     });
 };
 
@@ -193,7 +190,7 @@ module.exports.otpPasswordPost = async (req, res) => {
 module.exports.resetPassword = async (req, res) => {
     res.render("client/pages/user/reset-password", {
         pageTitle: "Đổi mật khẩu",
-    })
+    });
 };
 
 // [POST] /user/password/reset

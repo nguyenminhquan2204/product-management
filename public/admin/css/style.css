@@ -16,7 +16,7 @@
 
 /* Body */
 .body .sider {
-    width: 150px;
+    width: 170px;
     background: #323232;
     color: #fff;
     height: calc(100vh - 56px);
@@ -28,8 +28,8 @@
 .body .main {
     margin: 15px;
     position: relative;
-    left: 150px;
-    width: calc(100% - 180px);
+    left: 170px;
+    width: calc(100% - 200px);
 }
 /* End Body */
 
