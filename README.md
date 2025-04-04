@@ -1,1 +1,1 @@
-Tài khoản bên Admin: nguyenquan@gmail.com / quan2204
+Tài khoản Admin: nguyenquan@gmail.com / nguyenqua
