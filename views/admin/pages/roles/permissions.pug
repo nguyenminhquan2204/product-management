@@ -131,7 +131,30 @@ block main
                         each item in records
                             td(class="text-center")
                                 input(type="checkbox")
-
+                    //- Danh sách tài khoản users
+                    tr 
+                        td(colspan="4")
+                            b Tài khoản users
+                    tr(data-name="users_view")
+                        td Xem 
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="users_create")
+                        td Thêm mới
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="users_edit")
+                        td Chỉnh sửa
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="users_delete")
+                        td Xóa
+                        each item in records
+                            td(class="text-center")
+                                input(type="checkbox")
                     //- Nhóm quyền
                     tr 
                         td(colspan="4")

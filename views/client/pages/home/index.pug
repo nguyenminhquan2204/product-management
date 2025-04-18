@@ -13,9 +13,36 @@ block main
                     +box-head("Sản phẩm nổi bật")
             +product-gird(productsFeatured)
 
+    .container 
+        hr
+
     .section-products-featured.my-5 
         .container 
             .row 
                 .col-12
                     +box-head("Sản phẩm mới")
             +product-gird(productsNew)
+    
+    .container 
+        hr
+    
+    .section-products-featured.my-5 
+        .container 
+            .blogs
+                .row 
+                    .col-12
+                        +box-head("Bài viết")
+
+                .row
+                    each blog in blogs
+                        .col-md-3.mb-3
+                            .blogs-item
+                                .card.shadow-sm.rounded
+                                    if blog.thumbnail
+                                        .blogs-item-img
+                                            img.card-img-top(src=blog.thumbnail alt=blog.title)
+                                    .card-body
+                                        h5.card-title #{blog.title}
+                                        p.card-text!= blog.description.length > 100 ? blog.description.slice(0, 100) + '...' : blog.description
+                                        a.btn.btn-primary(href=`https://dantri.com.vn/kinh-doanh/lan-song-sa-thai-tro-lai-lieu-ai-co-dang-cuop-viec-cua-con-nguoi-20250219164130298.htm` target="_blank") Đọc thêm
+                

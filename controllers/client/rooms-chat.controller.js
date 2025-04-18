@@ -46,9 +46,9 @@ module.exports.createPost = async (req, res) => {
         users: []
     }
 
-    // console.log(dataChat);
+    console.log(userId);
 
-    userId.forEach(userId => {
+    [...userId].forEach(userId => {
         dataChat.users.push({
             user_id: userId,
             role: "user"

@@ -1,2 +1,35 @@
 footer.footer
-    | #{settingGeneral.copyright}
+    .container
+        .row
+            .col-md-4
+                h5 Về chúng tôi
+                ul
+                    li
+                        a(href="#") Giới thiệu
+                    li
+                        a(href="#") Tuyển dụng
+                    li
+                        a(href="#") Điều khoản sử dụng
+            .col-md-4
+                h5 Hỗ trợ khách hàng
+                ul
+                    li
+                        a(href="#") Chính sách đổi trả
+                    li
+                        a(href="#") Hướng dẫn mua hàng
+                    li
+                        a(href="#") Liên hệ
+            .col-md-4
+                h5 Kết nối với chúng tôi
+                .social-icons
+                    a(href="#")
+                        i.fab.fa-facebook-f
+                    a(href="#")
+                        i.fab.fa-twitter
+                    a(href="#")
+                        i.fab.fa-instagram
+                    a(href="#")
+                        i.fab.fa-youtube
+        hr
+        .text-center.mt-3
+            p #{settingGeneral.copyright}

@@ -54,10 +54,13 @@ const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-image', {
 
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
+console.log(formSendData);
 if (formSendData) {
     formSendData.addEventListener("submit", (e) => {
         e.preventDefault();
+        console.log(e);
         const content = e.target.elements.content.value;
+
         const images = upload.cachedFileArray || [];
 
         if (content || images.length > 0) {
@@ -239,5 +242,3 @@ if(buttonMember && formMember) {
     });
 }
 // End Member
-
-

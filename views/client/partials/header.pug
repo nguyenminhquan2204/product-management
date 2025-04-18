@@ -3,35 +3,17 @@ include ../mixins/sub-menu.pug
 header.header
     .container
         .row.align-items-center
-            .col-3
+            .col-4
                 .inner-logo
                     a(href="/")
-                        img(src=settingGeneral.logo, alt="logo")
-            .col-5 
-                form(
-                    action="/search"
-                    method="GET"
-                )
-                    div(class="form-group d-flex mb-0")
-                        input(
-                            type="text"
-                            placeholder="Nhập từ khóa ..."
-                            class="form-control"
-                            name="keyword"
-                            value=keyword
-                        )
-                        button(
-                            type="submit"
-                            class="btn btn-primary"
-                        ) Tìm
-
-            .col-4
-                .inner-menu
+                        img(src=settingGeneral.logo, alt="logo" style="max-height: 60px;")
+            .col-8
+                nav.inner-menu
                     ul
                         li
                             a(href="/") Trang chủ
                         li(class="sub-menu")
-                            a(href="/products") Sản phẩm
+                            a(href="/") Sản phẩm
                             -const pathProduct = "/products"
                             +sub-menu(layoutProductsCategory, pathProduct)
                         li
@@ -53,4 +35,24 @@ header.header
                             li 
                                 a(href="/user/register") Đăng ký
                                                 
+        .row.align-items-center
+            .col-4
+            .col-4
+                form(
+                    action="/search"
+                    method="GET"
+                )
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Nhập từ khóa ..."
+                            class="form-control"
+                            name="keyword"
+                            value=keyword
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Tìm
+            .col-4 
                         //- div #{user}

@@ -3,7 +3,7 @@ const ProductCategory = require("../../models/product-category.model.js");
 
 const productsHelper = require("../../helpers/products");
 const productsCategoryHelper = require("../../helpers/products-category");
-
+const paginationHelper = require("../../helpers/pagination");
 // [GET] /products
 module.exports.index = async (req, res) => {
     const productsFeatured = await Product.find({
@@ -35,26 +35,37 @@ module.exports.category = async (req, res) => {
         deleted: false
     });
 
-    try{
 
-        const listSubCategory = await productsCategoryHelper.getSubCategory(category.id);
-        
-        const listSubCategoryId = listSubCategory.map(item => item.id);
+    const listSubCategory = await productsCategoryHelper.getSubCategory(category.id);
+    
+    const listSubCategoryId = listSubCategory.map(item => item.id);
 
-        const products = await Product.find({
-            product_category_id: { $in: [category.id, ...listSubCategoryId]},
-            deleted: false,
-        }).sort({ position: "desc" });
+    const countProducts = await Product.countDocuments({
+        product_category_id: { $in: [category.id, ...listSubCategoryId]},
+        deleted: false,
+    });
 
-        const newProducts = productsHelper.priceNewProducts(products);
+    let objectPagination = paginationHelper(
+        {
+            currentPage: 1,
+            limitItems: 4
+        },
+        req.query,
+        countProducts
+    );
 
-        res.render("client/pages/products/index", {
-            pageTitle: category.title,
-            products: products,
-        });
-    } catch(error) {
-        res.redirect("back");
-    }
+    const products = await Product.find({
+        product_category_id: { $in: [category.id, ...listSubCategoryId]},
+        deleted: false,
+    }).sort({ position: "desc" }).limit(objectPagination.limitItems).skip(objectPagination.skip);
+
+    const newProducts = productsHelper.priceNewProducts(products);
+
+    res.render("client/pages/products/index", {
+        pageTitle: category.title,
+        products: newProducts,
+        pagination: objectPagination
+    });
 };
 
 // [GET] /products/detail/:slugProduct
