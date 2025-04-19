@@ -32,4 +32,5 @@ Dự án này là một hệ thống quản lý bán hàng bao gồm giao diện
 - Thêm sản phẩm vào giỏ hàng
 - Thanh toán đơn hàng
 - Nhắn tin và kết bạn thời gian thực (Realtime)
+- Hiển thị trang thái Online/Offline của người dùng
 - Đăng nhập / Đăng xuất
