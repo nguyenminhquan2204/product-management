@@ -1,5 +1,5 @@
 Tài khoản ADMIN : nguyenquan@gmail.com/nguyenquan
-Cung cấp các chức năng như:
+**Cung cấp các chức năng như:
 - Tổng quan
 - Danh sách sản phẩm
 - Danh mục sản phẩm
@@ -10,7 +10,9 @@ Cung cấp các chức năng như:
 - Phân quyền
 - Cài đặt chung
 
-Tài khoản CLIENT : nguyena@gmail.com/nguyena
+**Tài khoản CLIENT : nguyena@gmail.com/nguyena
 - Trang chủ
 - Trang sản phẩm
 - Thêm mới sản phẩm vào giỏ hàng, thanh toán
+- Chức năng nhắn tin, kết bạn realtime
+- Đăng nhập / đăng xuất
